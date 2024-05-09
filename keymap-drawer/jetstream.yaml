@@ -1,0 +1,160 @@
+layers:
+  Qwetry:
+  - Q
+  - W
+  - E
+  - R
+  - T
+  - Y
+  - U
+  - I
+  - O
+  - P
+  - A
+  - S
+  - D
+  - F
+  - G
+  - H
+  - J
+  - K
+  - L
+  - SQT
+  - {t: Z, h: LGUI}
+  - {t: X, h: LALT}
+  - {t: C, h: LCTRL}
+  - {t: V, h: LSHFT}
+  - B
+  - ▷||
+  - N
+  - {t: M, h: RSHFT}
+  - {t: COMMA, h: RCTRL}
+  - {t: DOT, h: RALT}
+  - {t: FSLH, h: RGUI}
+  - CAPS
+  - {t: TAB, h: Navigation}
+  - ENTER
+  - SPACE
+  - Symbols
+  - BSPC
+  Navigation:
+  - ESC
+  - {t: ▽, type: trans}
+  - UP
+  - {t: ▽, type: trans}
+  - LBRC
+  - RBRC
+  - KP 7
+  - KP 8
+  - KP 9
+  - KP PLUS
+  - {t: ▽, type: trans}
+  - LEFT
+  - DOWN
+  - RIGHT
+  - LBKT
+  - RBKT
+  - KP 4
+  - KP 5
+  - KP 6
+  - KP 0
+  - '&jetstream'
+  - PG UP
+  - {t: ▽, type: trans}
+  - PG DN
+  - LPAR
+  - NEXT
+  - RPAR
+  - KP 1
+  - KP 2
+  - KP 3
+  - KP MINUS
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  Symbols:
+  - '!'
+  - AT
+  - HASH
+  - DLLR
+  - PRCNT
+  - {t: ▽, type: trans}
+  - F7
+  - F8
+  - F9
+  - F12
+  - KP PLUS
+  - KP EQUAL
+  - KP MINUS
+  - UNDER
+  - STAR
+  - {t: ▽, type: trans}
+  - F4
+  - F5
+  - F6
+  - F11
+  - {t: ▽, type: trans}
+  - GRAVE
+  - SEMI
+  - Sft+ SEMI
+  - BSLH
+  - PREV
+  - {t: ▽, type: trans}
+  - F1
+  - F2
+  - F3
+  - F10
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {type: held}
+  - {t: ▽, type: trans}
+  Adjust:
+  - RGB BRI
+  - RGB SAI
+  - RGB HUI
+  - RGB EFF
+  - RGB TOG
+  - {t: BT, h: '0'}
+  - {t: BT, h: '1'}
+  - {t: BT, h: '2'}
+  - {t: BT, h: '3'}
+  - '&ble_clr'
+  - RGB BRD
+  - RGB SAD
+  - RGB HUD
+  - RGB EFR
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ▷||
+  - Reset
+  - Boot
+  - ''
+  - ''
+  - ''
+  - ''
+  - {type: held}
+  - ''
+  - ''
+  - {type: held}
+  - ''
+combos:
+- p: [1, 2]
+  k: ESC
+  l: [Qwetry]
+- p: [7, 8]
+  k: '&del_td'
+  l: [Qwetry]

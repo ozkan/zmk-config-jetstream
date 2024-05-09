@@ -1,0 +1,262 @@
+/*
+ * Copyright (c) 2024 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+
+
+
+
+
+
+///////////////////////////////    THIS IS A SAMPLE KEYMAP INTENDED TO BE REPLACED WITH YOUR OWN    ///////////////////////////////
+
+
+
+
+
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/rgb.h>
+#include <dt-bindings/zmk/bt.h>
+
+
+#define BASE 0
+#define NAV  1
+#define SYM  2
+#define ADJ  3
+
+
+
+// Using layer taps on thumbs, having quick tap as well helps w/ repeating space
+&lt {
+    tapping-term-ms = <200>;
+    quick_tap_ms = <200>;
+};
+
+/ {
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        adjust {
+            if-layers = <NAV SYM>;
+            then-layer = <ADJ>;
+        };
+    };
+
+    behaviors {
+        ht: hold_tap {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <150>;
+            bindings = <&kp>, <&kp>;
+        };
+
+        del_td: delete_tap_dance {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <250>;
+            bindings =  
+                <&kp DEL>,       // DELETE
+                <&kp LS(DEL)>;  //  SHIFT+DELETE 
+        };
+
+        bspc_del: backspace_delete {
+			compatible = "zmk,behavior-mod-morph";
+			#binding-cells = <0>;
+			bindings = <&kp BSPC>, // BACKSPACE
+                       <&kp DEL>; //  DELETE 
+			mods = <(MOD_LSFT|MOD_RSFT)>;
+		};
+
+        ble_clr: bluetooth_clr {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <250>;
+            bindings = 
+                <&bt BT_CLR>,       // BLUETOOTH CLEAR
+                <&bt BT_CLR_ALL>;  //  BLUETOOTH CLEAR ALL
+        };
+
+    };
+
+    combos {    
+        compatible = "zmk,combos";
+        
+        combo_esc {
+            timeout-ms = <50>;
+            key-positions = <1 2>;  // W + E
+            bindings = <&kp ESC>;  //  ESC
+            layers = <BASE>;     
+        }; 
+
+        combo_del {
+            timeout-ms = <50>;
+            key-positions = <7 8>;  // I + O
+            bindings = <&del_td>;  //  delete_tap_dance
+            layers = <BASE>;
+        };
+    };
+
+    macros{
+        jetstream: jetstream{
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <5>;
+            bindings  = <&macro_tap &kp LS(J) &kp E &kp T &kp S &kp T &kp R &kp E &kp A &kp M>;
+        };
+    };
+
+      
+    keymap {
+            compatible = "zmk,keymap";
+                
+// BASE LAYER
+//                               ╭─────────╮                                                               ╭─────────╮         
+//                     ╭─────────┤    E    ├─────────╮                                           ╭─────────┤    I    ├─────────╮     
+//           ╭─────────┤    W    │         │    R    ├─────────╮                       ╭─────────┤    U    │         │    O    ├─────────╮
+//           │    Q    │         ├─────────┤         │    T    │                       │    Y    │         ├─────────┤         │    P    │ 
+//           │         ├─────────┤    D    ├─────────┤         │                       │         ├─────────┤    K    ├─────────┤         │ 
+//           ├─────────┤    S    │         │    F    ├─────────┤                       ├─────────┤    J    │         │    L    ├─────────┤
+//           │    A    │         ├─────────┤         │    G    │                       │    H    │         ├─────────┤         │    '    │ 
+//           │         ├─────────┤    C    ├─────────┤         │                       │         ├─────────┤    ,    ├─────────┤         │ 
+//           ├─────────┤    X    │  LCTRL  │    V    ├─────────┤     ╭───────────╮     ├─────────┤    M    │  RCTRL  │    .    ├─────────┤
+//           │    Z    │   LALT  ├─────────┤  LSHFT  │    B    │     │   PLAY    │     │    N    │  RSHFT  ├─────────┤   RALT  │    /    │  
+//           │   LGUI  ├─────────╯         ╰─────────┤         │     │   PAUSE   │     │         ├─────────╯         ╰─────────┤   RGUI  │           
+//           ╰─────────╯                             ╰─────────╯     ╰───────────╯     ╰─────────╯                             ╰─────────╯
+//                                     ╭───────────╮                                               ╭───────────╮ 
+//                                     │    CAPS   ├───────────╮                       ╭───────────┤    BSPC   │              
+//                                     │           │    NAV    ├───────────┬───────────┤    SYM    │           │ 
+//                                     ╰───────────┤    TAB    │    ENTER  │   SPACE   │           ├───────────╯
+//                                                 ╰───────────┤           │           ├───────────╯ 
+//                                                             ╰───────────┴───────────╯ 
+
+// COMBOS KEYS:
+//  W + E = ESC
+//  I + O = DELETE 
+
+ base_layer {
+ display-name = "Qwetry";
+ bindings = <
+                &kp Q       &kp W       &kp E       &kp R       &kp T                               &kp Y       &kp U        &kp I             &kp O            &kp P
+                &kp A       &kp S       &kp D       &kp F       &kp G                               &kp H       &kp J        &kp K             &kp L            &kp SQT
+                &ht LGUI Z  &ht LALT X  &ht LCTRL C &ht LSHFT V &kp B       &kp C_PLAY_PAUSE        &kp N       &ht RSHFT M  &ht RCTRL COMMA   &ht RALT DOT     &ht RGUI FSLH   
+                                                  &kp CAPS   &lt NAV TAB   &kp ENTER        &kp SPACE   &mo SYM     &kp BSPC
+                        >;
+                        sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+                };
+
+
+
+
+// ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅
+//
+// NAV LAYER         
+//                               ╭─────────╮                                                               ╭─────────╮         
+//                     ╭─────────┤    UP   ├─────────╮                                           ╭─────────┤    8    ├─────────╮     
+//           ╭─────────┤         │         │         ├─────────╮                       ╭─────────┤     7   │         │    9    ├─────────╮
+//           │         │         ├─────────┤         │     {   │                       │    }    │         ├─────────┤         │    +    │ 
+//           │         ├─────────┤   DOWN  ├─────────┤         │                       │         ├─────────┤    5    ├─────────┤         │ 
+//           ├─────────┤   LEF   │         │  RIGHT  ├─────────┤                       ├─────────┤     4   │         │    6    ├─────────┤
+//           │         │         ├─────────┤         │     [   │                       │    ]    │         ├─────────┤         │    0    │ 
+//           │         ├─────────┤         ├─────────┤         │                       │         ├─────────┤    2    ├─────────┤         │ 
+//           ├─────────┤  PG_UP  │         │  PG_DN  ├─────────┤     ╭───────────╮     ├─────────┤     1   │         │    3    ├─────────┤
+//           │         │         ├─────────┤         │     (   │     │   Media   │     │    )    │         ├─────────┤         │    -    │  
+//           │         ├─────────╯         ╰─────────┤         │     │   NEXT    │     │         ├─────────╯         ╰─────────┤         │           
+//           ╰─────────╯                             ╰─────────╯     ╰───────────╯     ╰─────────╯                             ╰─────────╯
+//                                     ╭───────────╮                                               ╭───────────╮
+//                                     │    CAPS   ├───────────╮                       ╭───────────┤    BSPC   │             
+//                                     │           │    NAV    ├───────────┬───────────┤    SYM    │           │
+//                                     ╰───────────┤    TAB    │    ENTER  │   SPACE   │           ├───────────╯
+//                                                 ╰───────────┤           │           ├───────────╯ 
+//                                                             ╰───────────┴───────────╯ 
+ 
+ nav_layer {
+ display-name = "Navigation";
+ bindings = <
+                &kp ESC     &trans      &kp UP      &trans      &kp LBRC                        &kp RBRC    &kp KP_N7   &kp KP_N8   &kp KP_N9   &kp KP_PLUS
+                &trans      &kp LEFT    &kp DOWN    &kp RIGHT   &kp LBKT                        &kp RBKT    &kp KP_N4   &kp KP_N5   &kp KP_N6   &kp KP_N0
+                &jetstream  &kp PG_UP   &trans      &kp PG_DN   &kp LPAR        &kp C_NEXT      &kp RPAR    &kp KP_N1   &kp KP_N2   &kp KP_N3   &kp KP_MINUS   
+                                                &trans      &trans      &trans          &trans      &trans      &trans      
+                        >;
+                };
+
+
+// ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅
+//
+// SYM LAYER         
+//                               ╭─────────╮                                                               ╭─────────╮         
+//                     ╭─────────┤    #    ├─────────╮                                           ╭─────────┤    F8   ├─────────╮     
+//           ╭─────────┤    @    │         │    $    ├─────────╮                       ╭─────────┤    F7   │         │   F9    ├─────────╮
+//           │    !    │         ├─────────┤         │    %    │                       │         │         ├─────────┤         │    F12  │ 
+//           │         ├─────────┤    -    ├─────────┤         │                       │         ├─────────┤    F5   ├─────────┤         │ 
+//           ├─────────┤    =    │         │    _    ├─────────┤                       ├─────────┤    F4   │         │    F6   ├─────────┤
+//           │    +    │         ├─────────┤         │    *    │                       │         │         ├─────────┤         │   F11   │ 
+//           │         ├─────────┤     ;   ├─────────┤         │                       │         ├─────────┤    F2   ├─────────┤         │ 
+//           ├─────────┤    `    │         │     :   ├─────────┤     ╭───────────╮     ├─────────┤    F1   │         │    F3   ├─────────┤
+//           │         │         ├─────────┤         │    /    │     │   Media   │     │         │         ├─────────┤         │   F10   │  
+//           │         ├─────────╯         ╰─────────┤         │     │   PREV    │     │         ├─────────╯         ╰─────────┤         │           
+//           ╰─────────╯                             ╰─────────╯     ╰───────────╯     ╰─────────╯                             ╰─────────╯
+//                                     ╭───────────╮                                               ╭───────────╮
+//                                     │    CAPS   ├───────────╮                       ╭───────────┤    BSPC   │             
+//                                     │           │    NAV    ├───────────┬───────────┤    SYM    │           │
+//                                     ╰───────────┤    TAB    │    ENTER  │   SPACE   │           ├───────────╯
+//                                                 ╰───────────┤           │           ├───────────╯ 
+//                                                             ╰───────────┴───────────╯ 
+ sym_layer {
+ display-name = "Symbols";
+ bindings = <
+
+
+                &kp EXCL      &kp AT          &kp HASH       &kp DLLR         &kp PRCNT                          &trans      &kp F7      &kp F8      &kp F9      &kp F12         
+                &kp KP_PLUS   &kp KP_EQUAL    &kp KP_MINUS   &kp UNDER        &kp STAR                           &trans      &kp F4      &kp F5      &kp F6      &kp F11    
+                &trans        &kp GRAVE       &kp SEMI       &kp LS(SEMI)     &kp BSLH         &kp C_PREV        &trans      &kp F1      &kp F2      &kp F3      &kp F10    
+                                                                   &trans      &trans      &trans         &trans      &trans    &trans      
+                        >;
+                };
+
+
+// ⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅⋅.˳˳.⋅ॱ˙˙ॱ⋅.˳˳.⋅ॱ˙˙ॱᐧ.˳˳.⋅
+//
+// ADJUST LAYER         
+//                               ╭─────────╮                                                               ╭─────────╮         
+//                     ╭─────────┤   HUE+  ├─────────╮                                           ╭─────────┤   BT3   ├─────────╮     
+//           ╭─────────┤   SAT+  │         │   ANI+  ├─────────╮                       ╭─────────┤   BT2   │         │   BT4   ├─────────╮
+//           │   BRI+  │         ├─────────┤         │ RGB_TOG │                       │   BT1   │         ├─────────┤         │  BT-CLR │ 
+//           │         ├─────────┤   HUE-  ├─────────┤         │                       │         ├─────────┤         ├─────────┤         │ 
+//           ├─────────┤   SAT-  │         │   ANI-  ├─────────┤                       ├─────────┤         │         │         ├─────────┤
+//           │   BRI-  │         ├─────────┤         │         │                       │         │         ├─────────┤         │         │ 
+//           │         ├─────────┤         ├─────────┤         │                       │         ├─────────┤         ├─────────┤         │ 
+//           ├─────────┤         │         │         ├─────────┤     ╭───────────╮     ├─────────┤   BOOT  │         │         ├─────────┤
+//           │         │         ├─────────┤         │         │     │   PLAY    │     │  RESET  │         ├─────────┤         │         │  
+//           │         ├─────────╯         ╰─────────┤         │     │   PAUSE   │     │         ├─────────╯         ╰─────────┤         │           
+//           ╰─────────╯                             ╰─────────╯     ╰───────────╯     ╰─────────╯                             ╰─────────╯
+//                                     ╭───────────╮                                               ╭───────────╮
+//                                     │    CAPS   ├───────────╮                       ╭───────────┤    BSPC   │             
+//                                     │           │    NAV    ├───────────┬───────────┤    SYM    │           │
+//                                     ╰───────────┤    TAB    │    ENTER  │   SPACE   │           ├───────────╯
+//                                                 ╰───────────┤           │           ├───────────╯ 
+//                                                             ╰───────────┴───────────╯ 
+//
+// TAP DANCA KEYS:
+// &ble_clr = 1: BT_CLR  2: BT_CLR_ALL
+//
+
+
+adj_layer {
+display-name = "Adjust";
+bindings = <
+            &rgb_ug RGB_BRI    &rgb_ug RGB_SAI    &rgb_ug RGB_HUI    &rgb_ug RGB_EFF     &rgb_ug RGB_TOG                            &bt BT_SEL 0   &bt BT_SEL 1  &bt BT_SEL 2      &bt BT_SEL 3       &ble_clr
+            &rgb_ug RGB_BRD    &rgb_ug RGB_SAD    &rgb_ug RGB_HUD    &rgb_ug RGB_EFR     &none                                      &none          &none         &none             &none              &none
+            &none              &none              &none              &none               &none              &kp C_PLAY_PAUSE        &sys_reset     &bootloader   &none             &none              &none
+                                                                     &none           &none           &none                      &none        &none        &none
+                        >;
+                };
+
+        };
+};
+

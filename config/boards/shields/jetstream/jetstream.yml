@@ -1,0 +1,11 @@
+file_format: "1"
+id: jetstream
+name: Jetstream
+type: shield
+url: https://github.com/ozkan/jetstream-zmk
+requires:
+  - pro_micro
+features:
+  - keys
+  - underglow
+  - encoder 
