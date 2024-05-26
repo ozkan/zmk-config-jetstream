@@ -46,9 +46,9 @@
 
 
 
-### 2. Visualize keymap swith the Keymap-Drawer
-
-Keymap drawer: https://keymap-drawer.streamlit.app/
+### 2. Visualize Your Keymap with the Keymap-Drawer
+Visualization generated with [@caksoylar/keymap](https://github.com/caksoylar/keymap-drawer)  
+Keymap drawer: https://keymap-drawer.streamlit.app
 
 ![jetstream keymap](./keymap-drawer/jetstream.svg)
 
